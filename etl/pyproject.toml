@@ -1,0 +1,20 @@
+[project]
+name = "src"
+version = "0.1.0"
+description = "Project to develop ETL of chatbot"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel>=6.29.5",
+    "python-decouple>=3.8",
+    "ruff>=0.11.11",
+]
+
+[dependency-groups]
+lint = [
+    "ruff>=0.9.3",
+]
+
+[tool.uv]
+package = true
+

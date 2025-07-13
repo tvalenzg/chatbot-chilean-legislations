@@ -1,0 +1,41 @@
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+dist/
+build/
+.eggs/
+
+# Ignore egg-info folders anywhere, but keep .gitkeep
+**/*.egg-info/
+!**/*.egg-info/.gitkeep
+
+# Ignore any 'data' folder anywhere, but keep .gitkeep
+!**/data/.gitkeep
+
+# Ignore any '.venv' folder anywhere
+**/.venv/
+
+# Poetry / PDM / Hatch lock files
+poetry.lock
+pdm.lock
+hatch.toml
+
+# Logs
+*.log
+
+# Jupyter notebooks
+*.ipynb_checkpoints
+
+# Test and coverage
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
