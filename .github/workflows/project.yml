@@ -1,0 +1,54 @@
+# Nombre del workflow
+name: Python Lint and Format ETL
+
+on:
+  push:
+    branches: [ '*' ]
+    paths:
+      - 'etl/**'
+  pull_request:
+    branches: [ '*' ]
+    paths:
+      - 'etl/**'
+
+jobs:
+  lint-and-format-etl:
+    name: 'Python Lint and Format (ETL)'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: 2. Usar la versión de Python 3.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 3. Cache para uv
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            .venv
+          key: ${{ runner.os }}-uv-${{ hashFiles('**/uv.lock', '**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
+
+      - name: 4. Instalar uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: 5. Instalar las dependencias
+        run: |
+          uv sync
+
+      - name: 6. Ejecutar linters en etl
+        run: |
+          uv run ruff check etl
+
+      - name: 7. Revisar formato en etl
+        run: |
+          uv run ruff format etl --check
